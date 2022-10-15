@@ -9,9 +9,12 @@ import random
 import collections
 import time
 import matplotlib.pyplot as plt
+from pathlib import Path
+
+mod_path = Path(__file__).parent
 
 com_obj = win32.Dispatch("Tecnomatix.PlantSimulation.RemoteControl.22.1")
-com_obj.loadModel("C:\\Users\\Sukreet\\Thesis\\MA_model\\test_marl.spp")
+com_obj.loadModel("C:\\Users\\Sukreet\\Thesis\\custom environment\\updated_implementation\\test_marl.spp".format(mod_path))
 com_obj.startSimulation(".Models.Model")
 com_obj.setVisible(True)
 com_obj.SetTrustModels(True)
@@ -37,7 +40,7 @@ class Agent:
         self.actions_a3 = self.env.action_space_a3.n
         # DQN Agent Variables
         self.replay_buffer_size = 300000
-        self.train_start = 5000
+        self.train_start = 500
         self.memory1 = collections.deque(maxlen=self.replay_buffer_size)
         self.memory2 = collections.deque(maxlen=self.replay_buffer_size)
         self.memory3 = collections.deque(maxlen=self.replay_buffer_size)
@@ -45,8 +48,8 @@ class Agent:
         self.epsilon = 1.0
         #self.epsilon2 = 0.5
         #self.epsilon3 = 0.5
-        self.epsilon_min = 0.1
-        self.epsilon_decay = 0.095
+        self.epsilon_min = 0.01
+        self.epsilon_decay = 0.995
         # DQN Network Variables
         self.state_shape_a1 = self.observations_a1
         self.state_shape_a2 = self.observations_a2
@@ -120,6 +123,9 @@ class Agent:
 
             for episode in range(1, num_episodes + 1):
 
+                #if self.epsilon > self.epsilon_min and len(self.memory1) and len(self.memory2) and len(self.memory3):
+                    #self.epsilon *= self.epsilon_decay
+
                 while True:
                     state = env.reset()
 
@@ -165,9 +171,9 @@ class Agent:
                 best_reward_mean = current_rewards_mean
 
 
-                self.model1.save_model("C:\\Users\\Sukreet\\Thesis\\custom environment\\dqn_AGVdeadlock_1.h5")
-                self.model2.save_model("C:\\Users\\Sukreet\\Thesis\\custom environment\\dqn_AGVdeadlock_2.h5")
-                self.model3.save_model("C:\\Users\\Sukreet\\Thesis\\custom environment\\dqn_AGVdeadlock_3.h5")
+                self.model1.save_model("{}\\dqn_AGVdeadlock_1.h5".format(mod_path))
+                self.model2.save_model("{}\\dqn_AGVdeadlock_2.h5".format(mod_path))
+                self.model3.save_model("{}\\dqn_AGVdeadlock_3.h5".format(mod_path))
                 print(f"New best mean: {best_reward_mean}")
 
             plt.plot(eps, rews, color='green', linewidth=1)
@@ -270,7 +276,3 @@ if __name__ == "__main__":
     agent = Agent(env)
     agent.train(ep=1000,num_episodes=2000)
     env.close()
-
-
-
-
