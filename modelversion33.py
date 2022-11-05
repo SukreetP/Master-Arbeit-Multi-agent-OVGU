@@ -14,7 +14,7 @@ from pathlib import Path
 mod_path = Path(__file__).parent
 
 com_obj = win32.Dispatch("Tecnomatix.PlantSimulation.RemoteControl.22.1")
-com_obj.loadModel("C:\\Users\\Sukreet\\Thesis\\custom environment\\updated_implementation\\test_marl.spp".format(mod_path))
+com_obj.loadModel("\\test_marl.spp".format(mod_path))
 com_obj.startSimulation(".Models.Model")
 com_obj.setVisible(True)
 com_obj.SetTrustModels(True)
