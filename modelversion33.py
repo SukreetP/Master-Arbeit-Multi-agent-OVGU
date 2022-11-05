@@ -15,7 +15,6 @@ mod_path = Path(__file__).parent
 
 com_obj = win32.Dispatch("Tecnomatix.PlantSimulation.RemoteControl.22.1")
 com_obj.loadModel("\\test_marl.spp".format(mod_path))
-com_obj.startSimulation(".Models.Model")
 com_obj.setVisible(True)
 com_obj.SetTrustModels(True)
 
@@ -104,14 +103,14 @@ class Agent:
             #print("Action:", np.argmax(self.model3(state_a3)))
             return np.argmax(self.model3(state_a3))
 
-    def train(self, ep, num_episodes):
+    def train(self, epochs, num_of_steps):
 
         mem1 = []
         mem2 = []
         best_reward_mean = -50000000.0
         last_rewards: Deque = collections.deque(maxlen=10)
 
-        for j in range(ep):
+        for j in range(epochs):
 
             com_obj.resetSimulation(".Models.Model")
             com_obj.startSimulation(".Models.Model")
@@ -121,7 +120,7 @@ class Agent:
             n_coll = []
             time.sleep(0.25)
 
-            for episode in range(1, num_episodes + 1):
+            for episode in range(1, num_of_steps + 1):
 
                 #if self.epsilon > self.epsilon_min and len(self.memory1) and len(self.memory2) and len(self.memory3):
                     #self.epsilon *= self.epsilon_decay
@@ -176,26 +175,14 @@ class Agent:
                 self.model3.save_model("{}\\dqn_AGVdeadlock_3.h5".format(mod_path))
                 print(f"New best mean: {best_reward_mean}")
 
-            plt.plot(eps, rews, color='green', linewidth=1)
-            plt.xlabel("Steps")
-            plt.ylabel("Reward")
-            plt.suptitle("Rewards per time")
-            plt.savefig(f"reward_curve.png")
-
-
-            plt.plot(eps, n_coll, color='red', linewidth = 1)
-            plt.xlabel("Steps")
-            plt.ylabel("Number of collisions")
-            plt.suptitle("Collisions per time")
-            plt.savefig(f"Coll{j}.png")
 
             mem1.append(total_reward)
-            file1 = open("file1.txt", "a")
+            file1 = open("Rewards.txt", "a")
             print(total_reward, file=file1)
             file1.close()
 
             mem2.append(n_collisions)
-            file2 = open("file2.txt", "a")
+            file2 = open("collision.txt", "a")
             print(n_collisions, file=file2)
             file2.close()
 
@@ -274,5 +261,5 @@ class Agent:
 if __name__ == "__main__":
     env = CustomEnv(com_obj)
     agent = Agent(env)
-    agent.train(ep=1000,num_episodes=2000)
+    agent.train(epochs=1000, num_of_steps=2000)
     env.close()
