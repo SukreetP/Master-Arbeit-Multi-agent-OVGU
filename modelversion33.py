@@ -14,6 +14,7 @@ from pathlib import Path
 mod_path = Path(__file__).parent
 
 com_obj = win32.Dispatch("Tecnomatix.PlantSimulation.RemoteControl.22.1")
+#PATH TO MODEL
 com_obj.loadModel("Master-Arbeit-Multi-agent-OVGU\\test_marl.spp".format(mod_path))
 com_obj.setVisible(True)
 com_obj.SetTrustModels(True)
