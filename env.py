@@ -51,13 +51,13 @@ class CustomEnv(Env):
             self.plant_sim.startSimulation(".Models.Model")
 
         if (action_a3 == 0):
-            self.plant_sim.executeSimTalk(".Models.Model.moveForward3(.UserObjects.AGV2:1)")
+            self.plant_sim.executeSimTalk(".Models.Model.moveForward3(.UserObjects.AGV3:1)")
             self.plant_sim.startSimulation(".Models.Model")
         elif (action_a3 == 1):
-            self.plant_sim.executeSimTalk(".Models.Model.moveBackward3(.UserObjects.AGV2:1)")
+            self.plant_sim.executeSimTalk(".Models.Model.moveBackward3(.UserObjects.AGV3:1)")
             self.plant_sim.startSimulation(".Models.Model")
         elif (action_a3 == 2):
-            self.plant_sim.executeSimTalk(".Models.Model.stop3(.UserObjects.AGV2:1)")
+            self.plant_sim.executeSimTalk(".Models.Model.stop3(.UserObjects.AGV3:1)")
             self.plant_sim.startSimulation(".Models.Model")
 
         while True:
