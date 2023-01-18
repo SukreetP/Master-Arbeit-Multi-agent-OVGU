@@ -13,6 +13,7 @@ from pathlib import Path
 
 mod_path = Path(__file__).parent
 
+
 com_obj = win32.Dispatch("Tecnomatix.PlantSimulation.RemoteControl.22.1")
 com_obj.loadModel("C:\\Users\\sukreet.pal\\PycharmProjects\\thesis\\DQN training agents single part carry experiment_v_local\\single_part_test_layout_v_2.spp".format(mod_path))
 #com_obj.startSimulation(".Models.Model")
