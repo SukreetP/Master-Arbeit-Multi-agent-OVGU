@@ -1,4 +1,4 @@
-# Topic: 'Developement of a Multi-Agent reinforcement learning approach to deal with deadlocks in an automated guided vehicle system'
+# Topic: Developement of a Multi-Agent reinforcement learning approach to deal with deadlocks in an automated guided vehicle system
 
 The main objective of this thesis is to provide a generic approach in terms of
 Multi-agent reinforcement learning in handling deadlocks in a logistical warehouse
